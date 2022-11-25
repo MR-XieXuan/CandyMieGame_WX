@@ -1,29 +1,26 @@
 {
-    "description": "项目配置文件。",
+    "appid": "wx159a118e86fecc00",
+    "compileType": "game",
+    "libVersion": "2.17.0",
+    "packOptions": {
+        "ignore": [],
+        "include": []
+    },
+    "condition": {},
     "setting": {
-        "urlCheck": false,
-        "es6": true,
-        "postcss": true,
-        "minified": true,
-        "newFeature": true,
         "babelSetting": {
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
         },
+        "es6": true,
+        "enhance": true,
+        "minified": true,
         "uglifyFileName": true
-    },
-    "compileType": "game",
-    "libVersion": "2.20.1",
-    "appid": "wx4e2c89ed2b8f2379",
-    "projectname": "quickstart",
-    "condition": {},
-    "packOptions": {
-        "ignore": [],
-        "include": []
     },
     "editorSetting": {
         "tabIndent": "insertSpaces",
         "tabSize": 4
-    }
+    },
+    "projectname": "minigame-2"
 }

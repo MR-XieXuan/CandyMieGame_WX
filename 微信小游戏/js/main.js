@@ -22,6 +22,37 @@ export default class Main {
         this.nowPage = new LoadPage(canvas);
 
         this.download = new DownLoad();
+
+        // 检查资源是否缺少
+        this.imgList = [
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/1.png', wx.env.USER_DATA_PATH + '/' + 'candys1.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/2.png', wx.env.USER_DATA_PATH + '/' + 'candys2.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/3.png', wx.env.USER_DATA_PATH + '/' + 'candys3.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/4.png', wx.env.USER_DATA_PATH + '/' + 'candys4.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/5.png', wx.env.USER_DATA_PATH + '/' + 'candys5.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/6.png', wx.env.USER_DATA_PATH + '/' + 'candys6.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/7.png', wx.env.USER_DATA_PATH + '/' + 'candys7.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/8.png', wx.env.USER_DATA_PATH + '/' + 'candys8.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/9.png', wx.env.USER_DATA_PATH + '/' + 'candys9.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/10.png', wx.env.USER_DATA_PATH + '/' + 'candys10.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/11.png', wx.env.USER_DATA_PATH + '/' + 'candys11.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/12.png', wx.env.USER_DATA_PATH + '/' + 'candys12.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/candys/13.png', wx.env.USER_DATA_PATH + '/' + 'candys13.png', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/audio/XingYueYe.mp3', wx.env.USER_DATA_PATH + '/' + 'XingYueYe.mp3', 0],
+            ['https://panxie.mrxie.xyz/Project/CandyMieGame/images/ctrl/close.png', wx.env.USER_DATA_PATH + '/' + 'close.png', 0]
+        ]
+
+        this.imgs = []
+        this.imgList.forEach(src => {
+            let fs = wx.getFileSystemManager();
+            // 同步接口
+            try {
+                fs.accessSync(src[1]);
+            } catch (e) {
+                this.download.download(src);
+            }
+        });
+
         this.server = new Servo({
                 ask: 'district'
             },
@@ -33,6 +64,9 @@ export default class Main {
 
     }
 
+    have_not_file(res) {
+        console.log(res);
+    }
 
 
     updata() {
@@ -40,7 +74,7 @@ export default class Main {
         let flag = this.nowPage.updata();
         if (flag != this.nowPageNum) {
             if (this.nowPageNum == 0) {
-                if ( this.server.dataMsgOk() && this.download.all_download()  ) {
+                if (this.server.dataMsgOk() && this.download.all_download()) {
                     //console.log("OK");
                     flag = this.server.whereCode;
                 } else {

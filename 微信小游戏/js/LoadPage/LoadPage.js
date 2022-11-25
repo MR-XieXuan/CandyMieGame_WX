@@ -32,7 +32,7 @@ export default class LoadPage {
             img.src = src;
             this.imgs.push(img);
         });
-
+        this.showData = 0;
     }
 
     updata() {
@@ -40,40 +40,53 @@ export default class LoadPage {
     }
 
     show() {
-        this.img_1wh = this.imgs[1].width / this.imgs[1].height;
-        this.img_1Size = [parseInt(this.img_1wh * this.prH * 0.3), parseInt(this.prH * 0.3)];
-        this.img_1Position = [parseInt((this.prW - this.img_1Size[0]) / 2), parseInt((this.prH - this.img_1Size[1]) / 2)];
+        if (this.showData < 2) {
+            this.img_1wh = this.imgs[1].width / this.imgs[1].height;
+            this.img_1Size = [parseInt(this.img_1wh * this.prH * 0.3), parseInt(this.prH * 0.3)];
+            this.img_1Position = [parseInt((this.prW - this.img_1Size[0]) / 2), parseInt((this.prH - this.img_1Size[1]) / 2)];
+            this.moveTo_0_0 = (this.prW + 2 * this.img_1Size[0]) / 90;
+            this.moveTo_0_1 = this.img_1Size[0] / 2;
+            this.moveTo_1_0 = this.img_1Position[1] + this.img_1Size[1] / 2
+            this.lineTo_0_1 = (this.img_1Position[1] / Math.tan(60 * 0.017453293));
+            this.img_2wh = this.imgs[2].width / (this.imgs[2].height / 91);
+            this.img_2Size = [parseInt(this.img_2wh * this.prH * 0.3), parseInt(this.prH * 0.3)];
+            this.img_2Position = [parseInt((this.prW - this.img_2Size[0]) / 2), parseInt((this.prH - this.img_2Size[1]) / 2)];
+            this.img_2_a_h = this.imgs[2].height / 91;
+            this.showData++;
+        }
         // console.log(this.lodingtime)
         this.ctx.beginPath();
-        this.ctx.moveTo((this.prW + 2 * this.img_1Size[0]) / 90 * this.lodingtime - this.img_1Size[0] / 2, this.img_1Position[1] + this.img_1Size[1] / 2);
+        this.ctx.moveTo(this.moveTo_0_0 * this.lodingtime - this.moveTo_0_1, this.moveTo_1_0);
         this.ctx.lineTo(
-            ((this.prW + 2 * this.img_1Size[0]) / 90 * this.lodingtime - this.img_1Size[0] / 2) - (this.img_1Position[1] / Math.tan(60 * 0.017453293)),
+            (this.moveTo_0_0 * this.lodingtime - this.moveTo_0_1) - this.lineTo_0_1,
             0);
         this.ctx.lineTo(0, 0);
         this.ctx.lineTo(0, this.prH);
         this.ctx.lineTo(
-            ((this.prW + 2 * this.img_1Size[0]) / 90 * this.lodingtime - this.img_1Size[0] / 2) - (this.img_1Position[1] / Math.tan(60 * 0.017453293)),
+            (this.moveTo_0_0 * this.lodingtime - this.moveTo_0_1) - this.lineTo_0_1,
             this.prH);
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.fillStyle = 'pink';
         this.ctx.fill();
         if (this.lodingtime < 90) {
-            this.ctx.drawImage(this.imgs[1], (this.prW + 2 * this.img_1Size[0]) / 90 * this.lodingtime - this.img_1Size[0], this.img_1Position[1], this.img_1Size[0], this.img_1Size[1]);
+            this.ctx.drawImage(this.imgs[1],
+                this.moveTo_0_0 * this.lodingtime - this.img_1Size[0],
+                this.img_1Position[1],
+                this.img_1Size[0],
+                this.img_1Size[1]);
         }
-        this.img_2wh = this.imgs[2].width / (this.imgs[2].height/91);
-        this.img_2Size = [parseInt(this.img_2wh * this.prH * 0.3), parseInt(this.prH * 0.3)];
-        this.img_2Position = [parseInt((this.prW - this.img_2Size[0]) / 2), parseInt((this.prH - this.img_2Size[1]) / 2)];
-        this.ctx.drawImage(this.imgs[2],
+        this.ctx.drawImage(
+            this.imgs[2],
             0,
-            parseInt(this.lodingtime / 2) % 91 * this.imgs[2].height / 91 ,
+            parseInt(this.lodingtime / 2) % 90  * this.img_2_a_h  ,
             this.imgs[2].width,
-            this.imgs[2].height/91,
+            this.img_2_a_h,
             (this.prW + this.img_2Size[0]) / 90 * ((this.lodingtime < 90 ? this.lodingtime : 90) - 45) - this.img_2Size[0],
             this.img_2Position[1],
             this.img_2Size[0],
             this.img_2Size[1]
-            );
+        );
         this.lodingtime++;
     }
 
