@@ -83,7 +83,7 @@ function nextgame( $playerCode ){
     $nextStar = mysqli_fetch_array($yon)[0] + 1;
     $yon = $mysql->query("UPDATE `star` SET `starnum`=". $nextStar . " WHERE `id` =".$star[0]['id']."");
     // 获取 下一关
-    $yon = SQL\selectsql($mysql, "`playerCode`", "level", "playerCode", "\"".$playerCode."\"");
+    $yon = SQL\selectsql($mysql, "`playercode`", "level", "playerCode", "\"".$playerCode."\"");
     $next = mysqli_fetch_array($yon)[0] + 1;
     $map = get_map("level", $next + 1 );
     if ( !$map["address"] ){
@@ -190,12 +190,12 @@ function new_playerCode()
             die();
             $mysql->close();
         }
-        $yon = SQL\selectsql($mysql, "`playerCode`", "*", "playerCode", $playerCode);
+        $yon = SQL\selectsql($mysql, "`playercode`", "*", "playerCode", $playerCode);
     } while ($yon);
 
     $creat =  SQL\insert(
         $mysql,
-        "`playerCode`",
+        "`playercode`",
         array(
             'playerCode' => "'" . $playerCode . "'",
             'level' => "0",
