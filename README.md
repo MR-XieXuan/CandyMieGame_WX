@@ -3,6 +3,10 @@ WX 卡牌堆叠小游戏。适用与竖屏手机！
 这个程序是开源的 仓库地址 ：
 https://github.com/MR-XieXuan/CandyMieGame_WX
 
+# 运行环境
+已测试正常环境：
+* PHP-74,MySQL-5.5.62
+
 # 开始运行(装载到服务器)
 
 ## 把 CandyMieGame_PHP 版本安装到你的服务器
